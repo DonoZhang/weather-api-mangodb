@@ -14,7 +14,7 @@ class WeatherRepository {
     getAll(query, callback) {
         console.log('weathers repository getAll query ===>>>', query);
         this.collection.find(query).toArray(function (err, docs) {
-            callback(docs);
+            callback(docs, err);
         });
     }
 

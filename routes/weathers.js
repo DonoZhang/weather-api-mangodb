@@ -10,9 +10,17 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   console.log(req.body);
-  weatherRepository.create(req.body, function(result, err) {
-    res.json(result);
-  })
+  weatherRepository.getAll({name: req.body.name}, (existingWeathers, err)=>{
+    //if existing
+    if(existingWeathers.length > 0){
+      res.status(400).json('city existed');
+    }
+    else{
+      weatherRepository.create(req.body, function(result, err) {
+        res.json(req.body);
+      });
+    }
+  });
 });
 
 router.get('/:id', function(req, res, next) {
